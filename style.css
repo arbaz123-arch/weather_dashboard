@@ -113,3 +113,18 @@ button {
 .dark-mode #history li {
   background: #374151;
 }
+
+
+.location-btn {
+  margin: 0.8rem 0;
+  padding: 0.5rem 1rem;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dark-mode .location-btn {
+  background: #059669;
+}

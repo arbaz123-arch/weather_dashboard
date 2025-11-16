@@ -55,6 +55,67 @@ toggleBtn.addEventListener("click", () => {
   }
 });
 
+// CURRENT LOCATION WEATHER
+const locationBtn = document.getElementById("current-location-btn");
+
+locationBtn.addEventListener("click", () => {
+  if (!navigator.geolocation) {
+    output.textContent = "Geolocation not supported by browser.";
+    return;
+  }
+
+  output.innerHTML = `<div class="spinner"></div>`;
+
+  navigator.geolocation.getCurrentPosition(successLocation, errorLocation);
+});
+
+async function successLocation(position) {
+  const lat = position.coords.latitude;
+  const lon = position.coords.longitude;
+
+  try {
+    const res = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+    );
+
+    if (!res.ok) {
+      throw new Error("Unable to fetch weather for your location.");
+    }
+
+    const data = await res.json();
+
+    const icon = data.weather[0].icon;
+    const iconUrl = `https://openweathermap.org/img/wn/${icon}@4x.png`;
+
+    output.innerHTML = `
+      <div style="text-align:center;">
+        <img 
+          src="${iconUrl}" 
+          alt="${data.weather[0].description}" 
+          width="120"
+          height="120"
+        />
+      </div>
+
+      <h3>${data.name}, ${data.sys.country}</h3>
+      <p><strong>Temperature:</strong> ${data.main.temp} °C</p>
+      <p><strong>Condition:</strong> ${data.weather[0].main}</p>
+      <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
+      <p><strong>Wind Speed:</strong> ${data.wind.speed} m/s</p>
+    `;
+
+    saveToHistory(data.name);
+
+  } catch (error) {
+    output.textContent = "Error fetching your location weather.";
+  }
+}
+
+function errorLocation() {
+  output.textContent = "Location permission denied.";
+}
+
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const city = cityInput.value.trim();
