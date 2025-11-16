@@ -3,6 +3,45 @@ const cityInput = document.getElementById('city');
 const output = document.getElementById('output');
 import API_KEY from "./api_config.js";
 
+// Load search history from localStorage
+function loadHistory() {
+  const historyList = document.getElementById("history");
+  const history = JSON.parse(localStorage.getItem("weatherHistory")) || [];
+
+  historyList.innerHTML = "";
+  history.forEach((city) => {
+    const li = document.createElement("li");
+    li.textContent = city;
+
+    // Click on history → fetch weather again
+    li.addEventListener("click", () => {
+      cityInput.value = city;
+      form.dispatchEvent(new Event("submit"));
+    });
+
+    historyList.appendChild(li);
+  });
+}
+
+// Save city into history
+function saveToHistory(city) {
+  let history = JSON.parse(localStorage.getItem("weatherHistory")) || [];
+
+  // Remove duplicate entries
+  history = history.filter((item) => item.toLowerCase() !== city.toLowerCase());
+
+  // Add new city to top
+  history.unshift(city);
+
+  // Keep only latest 5
+  history = history.slice(0, 5);
+
+  localStorage.setItem("weatherHistory", JSON.stringify(history));
+
+  loadHistory();
+}
+
+
 // DARK MODE TOGGLE
 const toggleBtn = document.getElementById("theme-toggle");
 
@@ -56,9 +95,13 @@ output.innerHTML = `
   <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
   <p><strong>Wind Speed:</strong> ${data.wind.speed} m/s</p>
 `;
+saveToHistory(data.name);
 
   } catch (err) {
     output.textContent = `Error: ${err.message}`;
   }
 });
+
+loadHistory();
+
 
