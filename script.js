@@ -1,8 +1,7 @@
 const form = document.getElementById('weather-form');
 const cityInput = document.getElementById('city');
 const output = document.getElementById('output');
-
-const API_KEY = '07d0e256f1cd6ae09a739921cbbd7822'; // Replace with your real OpenWeatherMap API key
+import API_KEY from "./api_config.js";
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
