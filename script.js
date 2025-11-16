@@ -3,6 +3,19 @@ const cityInput = document.getElementById('city');
 const output = document.getElementById('output');
 import API_KEY from "./api_config.js";
 
+// DARK MODE TOGGLE
+const toggleBtn = document.getElementById("theme-toggle");
+
+toggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+
+  if (document.body.classList.contains("dark-mode")) {
+    toggleBtn.textContent = "☀️ Light Mode";
+  } else {
+    toggleBtn.textContent = "🌙 Dark Mode";
+  }
+});
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const city = cityInput.value.trim();

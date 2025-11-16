@@ -37,3 +37,41 @@ button {
   font-size: 0.95rem;
   color: #333;
 }
+
+
+/* Toggle Button */
+.theme-btn {
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background: #485060;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+  background: #353638 !important;
+  color: #f3f4f6 !important;
+}
+
+.dark-mode .container {
+  background: #1f2937;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode input {
+  background: #374151;
+  color: white;
+  border: 1px solid #4b5563;
+}
+
+.dark-mode button {
+  background: #2563eb;
+}
+
+.dark-mode .theme-btn {
+    background: #eeeff2;
+    color: black;
+}
