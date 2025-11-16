@@ -25,7 +25,7 @@ form.addEventListener('submit', async (e) => {
     return;
   }
 
-  output.textContent = 'Loading...';
+output.innerHTML = `<div class="spinner"></div>`;
 
   try {
     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
